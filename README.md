@@ -1,37 +1,113 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# interview-anubi-digital-frontend
 
-## Getting Started
+> A Next.js 12 and React 17 server-side rendered (SSR) web application featuring Tailwind CSS styling, Axios data fetching, and tabular cryptocurrency ledger presentation.
 
-Before start the frontend have the backend server
-running on localhost:3081 (it's needed for the api call)
+**Inception (First Commit):** `2022-05-13` • **Batch / Horizon:** `batch-2021-2022` • **Architecture Domain:** `Frontend Architecture / Next.js Client`
 
-Then run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
+## 📌 Architecture & Overview
+
+`JobInterview_anubi-frontend` is the client-facing presentation layer developed for the Anubi Digital recruitment assessment. It interfaces with the backend service [`interview-anubi-digital-backend`](https://github.com/fabogit/interview-anubi-digital-backend) to render historical cryptocurrency transaction ledgers via Next.js Server-Side Rendering (`getServerSideProps`).
+
+The user interface leverages Tailwind CSS utility classes and Next.js CSS Modules to render responsive, styled tabular records detailing transaction timestamps, user IDs, amounts, nature codes, and asset types.
+
+```
++-------------------------------------------------------------------------+
+|                       JobInterview_anubi-frontend                       |
+|                                                                         |
+|  [ Browser User ]                                                       |
+|         |                                                               |
+|         | HTTP GET /                                                    |
+|         v                                                               |
+|  +--------------------+       HTTP GET /v1/transactions                 |
+|  | pages/index.tsx    +----------------------------------------+        |
+|  | (getServerSideProps)                                        |        |
+|  +---------+----------+                                        |        |
+|            |                                                   v        |
+|            | Injects { props: { data } }       +----------------------+ |
+|            v                                   | JobInterview_anubi-  | |
+|  +--------------------+                        | backend (Port: 3081) | |
+|  | React SSR Table    |                        +----------------------+ |
+|  | (Tailwind CSS)     |                                                 |
+|  +--------------------+                                                 |
++-------------------------------------------------------------------------+
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+* **Context:** Technical interview frontend application for Anubi Digital, designed to demonstrate Next.js SSR lifecycles, Axios integration, and modern CSS utility design.
+* **Key Patterns:**
+  * **Server-Side Rendering (SSR):** Data pre-fetching on every incoming request inside `getServerSideProps` to ensure immediate HTML rendering.
+  * **Paired Client-Server Contract:** Direct integration with [`interview-anubi-digital-backend`](https://github.com/fabogit/interview-anubi-digital-backend) running on `http://localhost:3081`.
+  * **Utility-First Styling:** Component styling orchestrated through Tailwind CSS 3.0 alongside CSS Modules.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+---
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+## 🛠 Tech Stack
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+* **Framework & Runtime:** Next.js 12.0.4, React 17.0.2, `react-dom` 17.0.2, Node.js (>= 16)
+* **Language & Compiler:** TypeScript 4.5.2, Babel / Next SWC
+* **HTTP Client:** Axios 0.27.2
+* **Styling & Design:** Tailwind CSS 3.0.24, PostCSS 8.4.13, Autoprefixer 10.4.7
+* **Linting & Code Quality:** ESLint 7, `eslint-config-next` 12.0.4
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## ✨ Features & Endpoints
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+* **SSR Transaction Ledger:** Real-time retrieval and server rendering of active cryptocurrency transaction logs.
+* **Responsive Data Table:** Multi-column display covering date formatting, user identification, transaction values, nature tags, and asset identifiers.
+* **Brand Customization:** Styled header, company logos, and themed badges.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+### Client Pages & Routes
 
-## Deploy on Vercel
+| Route | Type | Description |
+|---|---|---|
+| `/` | SSR Page | Primary dashboard rendering transactions fetched from `http://localhost:3081/v1/transactions`. |
+| `/api/hello` | API Route | Default Next.js boilerplate API handler. |
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## 🚀 Getting Started
+
+### Prerequisites
+
+* Node.js `>= 16.0.0`
+* Active running instance of [`interview-anubi-digital-backend`](https://github.com/fabogit/interview-anubi-digital-backend) on port `3081`
+
+### Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/fabogit/interview-anubi-digital-frontend.git
+cd interview-anubi-digital-frontend
+
+# Install dependencies
+npm install
+```
+
+### Environment Configuration
+
+Configure an environment variable for the backend endpoint by creating a `.env.local` file:
+
+```env
+NEXT_PUBLIC_API_URL="http://localhost:3081"
+```
+
+### Running the Application
+
+```bash
+# Start development server (listens on port 3000)
+npm run dev
+
+# Production build and execution
+npm run build
+npm run start
+```
+
+Access the frontend dashboard at [http://localhost:3000](http://localhost:3000).
+
+---
+
+## 📄 License & Author
+
+Developed by [@fabogit](https://github.com/fabogit).
